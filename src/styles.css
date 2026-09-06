@@ -1,0 +1,462 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Design system: matte-black scientific instrumentation.
+ * Layered glass + neumorphic surfaces, phosphor-cyan primary,
+ * amber/violet/green channel accents. Components never hardcode colors.
+ */
+
+@theme inline {
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --color-warm: var(--warm);
+  --color-warm-foreground: var(--warm-foreground);
+
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-display: "Space Grotesk", "Manrope", sans-serif;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-panel: var(--panel);
+  --color-panel-foreground: var(--panel-foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-grid: var(--grid);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-truth: var(--truth);
+  --color-measure: var(--measure);
+  --color-estimate: var(--estimate);
+  --color-negative-channel: var(--negative-channel);
+  --color-positive-channel: var(--positive-channel);
+  --color-magnetic-channel: var(--magnetic-channel);
+  --color-thermal-channel: var(--thermal-channel);
+  --color-phase-a: var(--phase-a);
+  --color-phase-b: var(--phase-b);
+  --color-phase-c: var(--phase-c);
+}
+
+:root {
+  --radius: 4px;
+  /* Warm neutral graphite — no blue cast anywhere. */
+  --background: oklch(0.09 0.002 70);
+  --foreground: oklch(0.95 0.005 80);
+  --panel: oklch(0.145 0.003 70);
+  --panel-foreground: oklch(0.95 0.005 80);
+  --card: oklch(0.165 0.004 70);
+  --card-foreground: oklch(0.95 0.005 80);
+  --popover: oklch(0.155 0.004 70);
+  --popover-foreground: oklch(0.96 0.004 80);
+  --primary: oklch(0.79 0.14 62);
+  --primary-foreground: oklch(0.17 0.02 60);
+  --secondary: oklch(0.2 0.004 70);
+  --secondary-foreground: oklch(0.92 0.005 80);
+  --muted: oklch(0.19 0.004 70);
+  --muted-foreground: oklch(0.7 0.008 80);
+  --accent: oklch(0.22 0.005 70);
+  --accent-foreground: oklch(0.96 0.004 80);
+  --destructive: oklch(0.64 0.18 28);
+  --destructive-foreground: oklch(0.97 0.01 80);
+  --border: oklch(0.245 0.005 70);
+  --grid: oklch(0.17 0.004 70);
+  --input: oklch(0.23 0.005 70);
+  --ring: oklch(0.79 0.14 62);
+
+  --truth: oklch(0.9 0.008 80);
+  --measure: oklch(0.66 0.014 70);
+  --estimate: oklch(0.79 0.14 62);
+  --thermal-channel: oklch(0.79 0.14 62);
+  --negative-channel: oklch(0.7 0.16 32);
+  --positive-channel: oklch(0.8 0.13 128);
+  --magnetic-channel: oklch(0.87 0.07 95);
+  --phase-a: oklch(0.7 0.16 32);
+  --phase-b: oklch(0.8 0.13 128);
+  --phase-c: oklch(0.87 0.07 95);
+
+  /* Depth system — neumorphic pairs (raised highlight + cast shadow). */
+  --edge-highlight: color-mix(in oklab, white 7%, transparent);
+  --edge-shadow: color-mix(in oklab, black 60%, transparent);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+}
+
+/* Faint engineering grid used as the instrument backdrop. */
+@utility lab-grid {
+  background-image:
+    linear-gradient(to right, var(--color-grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-grid) 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0.3;
+}
+
+/* Display type — used only for hero/section statements, never for data. */
+@utility display-type {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+/* Frosted glass panel with a thin technical border and soft depth. */
+@utility glass-panel {
+  background-color: color-mix(in oklab, var(--panel) 68%, transparent);
+  backdrop-filter: blur(18px) saturate(130%);
+  border: 1px solid color-mix(in oklab, var(--border) 85%, transparent);
+  border-radius: var(--radius-xl);
+  box-shadow:
+    inset 0 1px 0 var(--edge-highlight),
+    0 1px 2px var(--edge-shadow),
+    0 18px 40px -28px var(--edge-shadow);
+}
+
+/* Opaque instrument panel — used behind charts where contrast matters. */
+@utility panel-surface {
+  background-color: color-mix(in oklab, var(--panel) 92%, transparent);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow:
+    inset 0 1px 0 var(--edge-highlight),
+    0 12px 30px -26px var(--edge-shadow);
+}
+
+/* Recessed well for controls and inset displays. */
+@utility inset-well {
+  background-color: color-mix(in oklab, black 26%, var(--panel));
+  border: 1px solid color-mix(in oklab, var(--border) 70%, transparent);
+  border-radius: var(--radius-md);
+  box-shadow:
+    inset 0 2px 5px color-mix(in oklab, black 55%, transparent),
+    inset 0 -1px 0 var(--edge-highlight);
+}
+
+/* Raised module face — metric tiles read as physical instrument modules. */
+@utility module-face {
+  background-image: linear-gradient(
+    to bottom,
+    color-mix(in oklab, white 3%, var(--card)),
+    color-mix(in oklab, black 12%, var(--card))
+  );
+  border: 1px solid color-mix(in oklab, var(--border) 90%, transparent);
+  border-radius: var(--radius-md);
+  box-shadow:
+    inset 0 1px 0 var(--edge-highlight),
+    0 2px 6px -3px var(--edge-shadow);
+}
+
+@utility panel-label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-muted-foreground);
+}
+
+@utility readout {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+/* Hairline technical separator with a highlighted lower edge. */
+@utility hairline {
+  border-top: 1px solid color-mix(in oklab, var(--border) 80%, transparent);
+  box-shadow: 0 1px 0 var(--edge-highlight);
+}
+
+/* Compact indeterminate activity bar for RUNNING states (no fake progress value). */
+@keyframes scan-sweep {
+  0% { background-position: -100% 0; }
+  100% { background-position: 200% 0; }
+}
+.scan-bar {
+  background-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in oklab, var(--primary) 70%, transparent) 50%,
+    transparent 100%
+  );
+  background-size: 50% 100%;
+  background-repeat: no-repeat;
+  animation: scan-sweep 1.1s linear infinite;
+}
+
+/* Status LED pulse — presence indicator only, carries no numeric meaning. */
+@keyframes led-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
+.led-live {
+  animation: led-pulse 2.4s ease-in-out infinite;
+}
+
+/* Data packets travelling along a pipeline connector. */
+@keyframes packet-drop {
+  0% { transform: translateY(-100%); opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { transform: translateY(150%); opacity: 0; }
+}
+
+/* Progressive reveal for pipeline stages as they scroll into view. */
+@keyframes stage-reveal {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+.stage-reveal {
+  animation: stage-reveal 0.5s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scan-bar { animation-duration: 3s; }
+  .led-live,
+  .stage-reveal { animation: none; }
+  *[style*="packet-drop"] { animation: none !important; }
+}
+
+/* ------------------------------------------------------------------ premium */
+
+/* Warm accent used for calls to action and emphasis (Resend-like restraint). */
+:root {
+  --warm: oklch(0.74 0.17 55);
+  --warm-foreground: oklch(0.16 0.02 60);
+  --gooey-color-1: var(--primary);
+  --gooey-color-2: var(--warm);
+  --gooey-color-3: var(--positive-channel);
+  --gooey-color-4: var(--foreground);
+}
+
+/* Soft top-light sheen for large hero surfaces. */
+@utility sheen {
+  position: relative;
+  isolation: isolate;
+}
+@utility hero-shell {
+  background:
+    linear-gradient(
+      to bottom,
+      color-mix(in oklab, white 5%, transparent),
+      transparent 30%
+    ),
+    color-mix(in oklab, var(--panel) 55%, transparent);
+  backdrop-filter: blur(26px) saturate(140%);
+  border: 1px solid color-mix(in oklab, white 9%, transparent);
+  border-radius: 24px;
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, white 12%, transparent),
+    inset 0 -1px 0 color-mix(in oklab, black 40%, transparent),
+    0 40px 120px -60px color-mix(in oklab, black 90%, transparent);
+}
+
+/* Skeuomorphic pill button — raised metal face, warm accent variant. */
+@utility pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  padding: 0.625rem 1.125rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  border: 1px solid color-mix(in oklab, white 12%, transparent);
+  background-image: linear-gradient(
+    to bottom,
+    color-mix(in oklab, white 8%, var(--card)),
+    color-mix(in oklab, black 16%, var(--card))
+  );
+  color: var(--color-foreground);
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, white 16%, transparent),
+    0 1px 2px color-mix(in oklab, black 60%, transparent),
+    0 10px 24px -18px color-mix(in oklab, black 90%, transparent);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+@utility pill-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  padding: 0.625rem 1.125rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--warm-foreground);
+  border: 1px solid color-mix(in oklab, white 22%, transparent);
+  background-image: linear-gradient(
+    to bottom,
+    color-mix(in oklab, white 24%, var(--warm)),
+    color-mix(in oklab, black 14%, var(--warm))
+  );
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, white 45%, transparent),
+    0 1px 2px color-mix(in oklab, black 55%, transparent),
+    0 18px 40px -22px color-mix(in oklab, var(--warm) 55%, transparent);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.2s ease;
+}
+.pill-btn:hover,
+.pill-btn-primary:hover {
+  transform: translateY(-1px);
+}
+.pill-btn:active,
+.pill-btn-primary:active {
+  transform: translateY(1px);
+  box-shadow: inset 0 2px 6px color-mix(in oklab, black 55%, transparent);
+}
+
+/* Deck card used by CardSwap: heavy glass with a specular top edge. */
+.glass-deck-card {
+  width: min(90%, 26rem);
+  height: 20rem;
+  border-radius: 20px;
+  padding: 1.25rem;
+  color: var(--color-foreground);
+  background:
+    linear-gradient(to bottom, color-mix(in oklab, white 7%, transparent), transparent 40%),
+    color-mix(in oklab, var(--panel) 88%, transparent);
+  border: 1px solid color-mix(in oklab, white 10%, transparent);
+  backdrop-filter: blur(20px) saturate(140%);
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, white 16%, transparent),
+    inset 0 -1px 0 color-mix(in oklab, black 50%, transparent),
+    0 30px 80px -40px color-mix(in oklab, black 95%, transparent);
+  overflow: hidden;
+}
+
+/* ------------------------------------------------------------- gooey nav */
+.gooey-nav {
+  --gooey-bg: color-mix(in oklab, var(--warm) 88%, white);
+  isolation: isolate;
+}
+.gooey-effect {
+  position: absolute;
+  opacity: 1;
+  pointer-events: none;
+  display: grid;
+  place-items: center;
+  z-index: 1;
+  border-radius: 999px;
+}
+.gooey-filter {
+  background-image: linear-gradient(
+    to bottom,
+    color-mix(in oklab, white 26%, var(--gooey-bg)),
+    color-mix(in oklab, black 12%, var(--gooey-bg))
+  );
+  border: 1px solid color-mix(in oklab, white 24%, transparent);
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, white 45%, transparent),
+    0 10px 26px -14px color-mix(in oklab, var(--warm) 70%, transparent);
+  transition:
+    left 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    width 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    top 0.35s ease,
+    height 0.35s ease;
+}
+.gooey-text {
+  color: transparent;
+}
+.gooey-particle,
+.gooey-point {
+  display: block;
+  opacity: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 9999px;
+  transform-origin: center;
+}
+.gooey-particle {
+  --time: 5s;
+  position: absolute;
+  top: calc(50% - 8px);
+  left: calc(50% - 8px);
+  animation: gooey-particle calc(var(--time)) ease 1 -350ms;
+}
+.gooey-point {
+  background: var(--color, var(--primary));
+  opacity: 1;
+  animation: gooey-point calc(var(--time)) ease 1 -350ms;
+}
+@keyframes gooey-particle {
+  0% {
+    transform: rotate(0deg) translate(calc(var(--start-x)), calc(var(--start-y)));
+    opacity: 1;
+    animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45);
+  }
+  70% {
+    transform: rotate(calc(var(--rotate) * 0.5)) translate(calc(var(--end-x) * 1.2), calc(var(--end-y) * 1.2));
+    opacity: 1;
+  }
+  85% {
+    transform: rotate(calc(var(--rotate) * 0.66)) translate(calc(var(--end-x)), calc(var(--end-y)));
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(calc(var(--rotate) * 1.2)) translate(calc(var(--end-x) * 0.5), calc(var(--end-y) * 0.5));
+    opacity: 1;
+  }
+}
+@keyframes gooey-point {
+  0% { transform: scale(0); opacity: 0; animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45); }
+  25% { transform: scale(calc(var(--scale) * 0.25)); }
+  38% { opacity: 1; }
+  65% { transform: scale(var(--scale)); opacity: 1; animation-timing-function: ease; }
+  85% { transform: scale(var(--scale)); opacity: 1; }
+  100% { transform: scale(0); opacity: 0; }
+}
+@keyframes gooey-pill {
+  0% { transform: scale(0); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes gooey-text-in {
+  0% { opacity: 0; transform: translateY(4px); }
+  100% { opacity: 1; transform: none; }
+}
+.gooey-text-active {
+  animation: gooey-text-in 0.5s ease both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gooey-particle,
+  .gooey-point,
+  .gooey-text-active { animation: none !important; }
+}
