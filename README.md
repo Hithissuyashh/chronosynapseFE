@@ -220,7 +220,7 @@ VITE_SCIENCE_API_URL
 Example:
 
 ```env
-VITE_SCIENCE_API_URL=https://your-backend.example.com
+VITE_SCIENCE_API_URL= https://chronosynapse-urbt.onrender.com/
 ```
 
 Do not include `/api` in the environment variable.
@@ -268,7 +268,7 @@ The frontend is designed to be deployed independently from the backend.
 For a production deployment, configure:
 
 ```env
-VITE_SCIENCE_API_URL=https://your-production-backend.example.com
+VITE_SCIENCE_API_URL= https://chronosynapse-urbt.onrender.com/
 ```
 
 Because Vite embeds environment variables during the build, changing the environment variable requires a new frontend deployment/build.
