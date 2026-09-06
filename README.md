@@ -59,23 +59,21 @@ The learner can observe the resulting changes in:
 
 ChronoSynapse does **not** claim that Kalman filtering and BDH are the same type of model.
 
-The Kalman branch represents an online state estimator:
+The Kalman branch represents an online state estimator.
 
-\[
-x_{t|t-1}=x_{t-1}
-\]
+**Prediction**
 
-\[
-P_{t|t-1}=P_{t-1}+Q
-\]
+`x(t|t−1) = x(t−1)`
 
-\[
-K_t=\frac{P_{t|t-1}}{P_{t|t-1}+R}
-\]
+`P(t|t−1) = P(t−1) + Q`
 
-\[
-x_t=x_{t|t-1}+K_t(z_t-x_{t|t-1})
-\]
+**Kalman gain**
+
+`K(t) = P(t|t−1) / [P(t|t−1) + R]`
+
+**State update**
+
+`x(t) = x(t|t−1) + K(t) × [z(t) − x(t|t−1)]`
 
 The covariance state makes estimation uncertainty explicit.
 
@@ -126,23 +124,17 @@ The public demonstration uses a reproducible replay path rather than requiring t
 
 With the scalar Kalman configuration used by the project:
 
-\[
-Q=R=10^{-8}
-\]
+`Q = R = 10⁻⁸`
 
 the steady-state Kalman gain converges to:
 
-\[
-K_\infty=\frac{\sqrt5-1}{2}\approx0.618034
-\]
+`K∞ = (√5 − 1) / 2 ≈ 0.618034`
 
 which is:
 
-\[
-K_\infty=\frac{1}{\varphi}
-\]
+`K∞ = 1 / φ`
 
-where \(\varphi\) is the golden ratio.
+where `φ` is the golden ratio.
 
 The frontend exposes the Kalman gain so that the learner can watch this convergence rather than merely being told about it.
 
@@ -151,40 +143,40 @@ The frontend exposes the Kalman gain so that the learner can watch this converge
 ## Architecture
 
 ```text
-┌─────────────────────────────────────────────┐
-│             React / TypeScript UI            │
-│                                             │
-│  Kalman diagnostics                         │
-│  Synaptic-memory visualization              │
-│  Detuning visualization                     │
-│  Synapse graph                              │
-│  A→B→A timeline                             │
-│  Experiment controls                        │
-└──────────────────────┬──────────────────────┘
-                       │
-                       │ HTTPS REST
-                       ▼
-┌─────────────────────────────────────────────┐
-│              FastAPI Backend                 │
-│                                             │
-│        /api/experiment/replay               │
-└──────────────────────┬──────────────────────┘
-                       │
-                       ▼
-┌─────────────────────────────────────────────┐
-│          Replay / Scientific Engine          │
-│                                             │
-│  Recorded Quantum Clock telemetry           │
-│  Kalman diagnostics                         │
-│  BDH-inspired synaptic memory               │
-└──────────────────────┬──────────────────────┘
-                       │
-                       ▼
-┌─────────────────────────────────────────────┐
-│              Pathway substrate               │
-│                                             │
-│       Streaming / replay processing         │
-└─────────────────────────────────────────────┘
+             ┌─────────────────────────────────────────────┐
+             │             React / TypeScript UI           │
+             │                                             │
+             │  Kalman diagnostics                         │
+             │  Synaptic-memory visualization              │
+             │  Detuning visualization                     │
+             │  Synapse graph                              │
+             │  A→B→A timeline                             │
+             │  Experiment controls                        │
+             └──────────────────────┬──────────────────────┘
+                                    │
+                                    │ HTTPS REST
+                                    ▼
+             ┌─────────────────────────────────────────────┐
+             │              FastAPI Backend                │
+             │                                             │
+             │        /api/experiment/replay               │
+             └──────────────────────┬──────────────────────┘
+                                    │
+                                    ▼
+             ┌─────────────────────────────────────────────┐
+             │          Replay / Scientific Engine         │
+             │                                             │
+             │  Recorded Quantum Clock telemetry           │
+             │  Kalman diagnostics                         │
+             │  BDH-inspired synaptic memory               │
+             └──────────────────────┬──────────────────────┘
+                                    │
+                                    ▼
+             ┌─────────────────────────────────────────────┐
+             │              Pathway substrate              │
+             │                                             │
+             │       Streaming / replay processing         │
+             └─────────────────────────────────────────────┘
 ```
 
 ---
