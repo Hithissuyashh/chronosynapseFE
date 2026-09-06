@@ -424,3 +424,63 @@ The frontend is an interactive research/education artifact for the DataForge 202
 The primary objective is not to present a generic AI dashboard, but to make a difficult technical concept observable:
 
 > **Streaming information can be compressed into evolving internal state, but different memory mechanisms retain, adapt, and interfere in fundamentally different ways.**
+
+## Research Evidence
+
+ChronoSynapse is grounded in recent primary research on Dragon Hatchling,
+short-term synaptic plasticity, Hebbian plasticity, and fast-weight memory.
+
+### Primary Papers
+
+1. **Kosowski et al. (2025)**  
+   *The Dragon Hatchling: The Missing Link between the Transformer and Models of the Brain.*  
+   arXiv:2509.26507  
+   https://arxiv.org/abs/2509.26507
+
+   **Relevance:** Provides the primary research basis for the Dragon Hatchling
+   (BDH) context used by this project.
+
+2. **Kozachkov et al. (2022)**  
+   *Robust and brain-like working memory through short-term synaptic plasticity.*  
+   PLOS Computational Biology, 18(12), e1010776.  
+   https://doi.org/10.1371/journal.pcbi.1010776
+
+   **Relevance:** Supports the conceptual basis for using short-term synaptic
+   plasticity as a mechanism for working-memory-like behavior.
+
+3. **Duan et al. (2023)**  
+   *Hebbian and Gradient-based Plasticity Enables Robust Memory and Rapid Learning in RNNs.*  
+   ICLR 2023.  
+   https://arxiv.org/abs/2302.03235
+
+   **Relevance:** Provides evidence connecting Hebbian plasticity with memory
+   formation and rapid adaptation.
+
+4. **Gao et al. (2024)**  
+   *Random fluctuations and synaptic plasticity enhance working memory
+   activities in the neuron–astrocyte network.*  
+   Cognitive Neurodynamics.  
+   https://doi.org/10.1007/s11571-023-10002-y
+
+   **Relevance:** Provides additional recent evidence for synaptic-plasticity
+   mechanisms in working-memory dynamics.
+
+5. **Irie & Gershman (2025)**  
+   *Fast weight programming and linear transformers: from machine learning to neurobiology.*  
+   arXiv:2508.08435  
+   https://arxiv.org/abs/2508.08435
+
+   **Relevance:** Provides broader context for dynamically changing fast weights
+   and their relationship to sequence processing and neurobiological mechanisms.
+
+### Evidence Discipline
+
+The project distinguishes between claims directly supported by the cited
+research and the educational abstractions implemented here.
+
+The synaptic-memory component is **BDH-inspired**, not an official reproduction
+of the complete Dragon Hatchling architecture or an official BDH checkpoint.
+The project does not claim mathematical equivalence between Kalman filtering
+and synaptic plasticity.
+
+...
